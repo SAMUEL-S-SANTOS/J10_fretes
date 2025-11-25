@@ -1,0 +1,405 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f5f5f5;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+}
+
+.container {
+    width: 100%;
+    max-width: 400px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.header {
+    background: white;
+    padding: 24px 16px;
+    text-align: center;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.logo {
+    max-width: 100%;
+    height: auto;
+    max-height: 140px;
+    margin: 0 auto;
+    display: block;
+}
+
+
+
+.main-content {
+    padding: 24px 20px;
+}
+
+.form-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 20px;
+    text-align: center;
+    letter-spacing: 0.3px;
+}
+
+.forms {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+}
+
+label {
+    font-weight: 500;
+    color: #2c2c2c;
+    font-size: 14px;
+    letter-spacing: 0.2px;
+}
+
+input[type="text"],
+input[type="tel"],
+textarea,
+select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #d0d0d0;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    background-color: #f8f8f8;
+    color: #333;
+}
+
+input[type="text"]:focus,
+input[type="tel"]:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: #2c5aa0;
+    background-color: #fff;
+    box-shadow: 0 0 0 2px rgba(44, 90, 160, 0.1);
+}
+
+input[type="text"]::placeholder,
+input[type="tel"]::placeholder,
+textarea::placeholder {
+    color: #999;
+    opacity: 1;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 80px;
+    font-family: inherit;
+}
+
+select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 20px;
+    padding-right: 32px;
+}
+
+.submit-btn {
+    padding: 12px 24px;
+    background: #1e3a5f;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    text-transform: capitalize;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(30, 58, 95, 0.2);
+    margin-top: 8px;
+}
+
+.submit-btn:hover {
+    background: #162d47;
+    box-shadow: 0 4px 12px rgba(30, 58, 95, 0.3);
+}
+
+.submit-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 4px rgba(30, 58, 95, 0.2);
+}
+
+/* Responsivo para Tablets (768px e acima) */
+@media (min-width: 768px) {
+    body {
+        padding: 32px;
+    }
+
+    .container {
+        max-width: 500px;
+    }
+
+    .header {
+        padding: 32px 24px;
+    }
+
+    .logo {
+        max-height: 160px;
+    }
+
+    .main-content {
+        padding: 32px 28px;
+    }
+
+    .form-title {
+        font-size: 28px;
+        margin-bottom: 24px;
+    }
+
+    .forms {
+        gap: 20px;
+    }
+
+    label {
+        font-size: 15px;
+    }
+
+    input[type="text"],
+    input[type="tel"],
+    textarea,
+    select {
+        padding: 12px 14px;
+        font-size: 15px;
+    }
+
+    textarea {
+        min-height: 100px;
+    }
+
+    .submit-btn {
+        padding: 13px 28px;
+        font-size: 16px;
+        margin-top: 10px;
+    }
+}
+
+/* Responsivo para Desktops (1024px e acima) */
+@media (min-width: 1024px) {
+    .container {
+        max-width: 600px;
+    }
+
+    .header {
+        padding: 40px 32px;
+    }
+
+    .logo {
+        max-height: 180px;
+    }
+
+    .main-content {
+        padding: 40px 32px;
+    }
+
+    .form-title {
+        font-size: 32px;
+        margin-bottom: 28px;
+    }
+
+    .forms {
+        gap: 22px;
+    }
+
+    label {
+        font-size: 16px;
+    }
+
+    input[type="text"],
+    input[type="tel"],
+    textarea,
+    select {
+        padding: 14px 16px;
+        font-size: 16px;
+    }
+
+    textarea {
+        min-height: 120px;
+    }
+
+    .submit-btn {
+        padding: 14px 32px;
+        font-size: 17px;
+    }
+}
+
+/* Responsivo para telas muito pequenas (menos de 360px) */
+@media (max-width: 359px) {
+    body {
+        padding: 8px;
+    }
+
+    .container {
+        max-width: 100%;
+    }
+
+    .header {
+        padding: 16px 12px;
+    }
+
+    .logo {
+        max-height: 100px;
+    }
+
+    .main-content {
+        padding: 16px 12px;
+    }
+
+    .form-title {
+        font-size: 20px;
+        margin-bottom: 16px;
+    }
+
+    .forms {
+        gap: 14px;
+    }
+
+    label {
+        font-size: 13px;
+    }
+
+    input[type="text"],
+    input[type="tel"],
+    textarea,
+    select {
+        padding: 9px 10px;
+        font-size: 14px;
+    }
+
+    textarea {
+        min-height: 70px;
+    }
+
+    .submit-btn {
+        padding: 10px 16px;
+        font-size: 14px;
+        margin-top: 6px;
+    }
+}
+
+/* Modo paisagem (landscape) */
+@media (max-height: 500px) and (orientation: landscape) {
+    body {
+        padding: 8px;
+        justify-content: flex-start;
+    }
+
+    .container {
+        max-width: 100%;
+    }
+
+    .header {
+        padding: 12px 16px;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .logo {
+        max-height: 70px;
+    }
+
+    .main-content {
+        padding: 12px 16px;
+    }
+
+    .form-title {
+        font-size: 18px;
+        margin-bottom: 12px;
+    }
+
+    .forms {
+        gap: 12px;
+    }
+
+    .form-group {
+        gap: 4px;
+    }
+
+    label {
+        font-size: 12px;
+    }
+
+    input[type="text"],
+    input[type="tel"],
+    textarea,
+    select {
+        padding: 8px 10px;
+        font-size: 13px;
+    }
+
+    textarea {
+        min-height: 60px;
+    }
+
+    .submit-btn {
+        padding: 9px 14px;
+        font-size: 13px;
+        margin-top: 4px;
+    }
+}
+
+/* Suporte para telas retina/high DPI */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .container {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+}
+
+/* Impressão */
+@media print {
+    body {
+        background: white;
+        padding: 0;
+    }
+
+    .container {
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+
+    .submit-btn {
+        display: none;
+    }
+}

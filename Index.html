@@ -1,32 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description" content="J10 Fretes - Sistema de orçamento de fretes">
+    <meta name="theme-color" content="#4CAF50">
     <link href="style.css" rel="stylesheet" />
-    <title>J10_fretes</title>
+    <title>J10 Fretes - Orçamento</title>
 </head>
 <body>
-    <img id="head" src="imagens/logo.png" alt="logo"/>
+    <div class="container">
+        <header class="header">
+            <img id="head" src="imagens/logo.png" alt="logo J10 Fretes" class="logo"/>
+        </header>
 
-    <form action="" method="get" class="forms" id="quoteForm">
-      <div class="forms">
-        <label for="name">Nome: </label> <br>
-        <input type="text" name="name" id="name" required />
-      </div>
-      <div class="forms">
-        <label for="phone">Telefone: </label> <br>
-        <input type="tel" name="phone" id="phone" required />
-      </div>
-      <div class="forms">
-        <label for="location">Localização: </label> <br>
-        <input list="locations" type="text" name="location" id="location" placeholder="Digite sua localização" required />
-        <datalist id="locations"></datalist>
-      </div>
-      <div class="forms">
-        <input type="submit" value="Orçamento" />
-      </div>
-    </form>
+        <main class="main-content">
+            <div class="form-title">Frete</div>
+            <form action="" method="get" class="forms" id="quoteForm">
+                <div class="form-group">
+                    <label for="name">Nome</label>
+                    <input type="text" name="name" id="name" placeholder="Value" required />
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Telefone</label>
+                    <input type="tel" name="phone" id="phone" placeholder="(ddd) 0000-0000" required />
+                </div>
+                
+                <div class="form-group">
+                    <label for="location">Localização</label>
+                    <input list="locations" type="text" name="location" id="location" placeholder="Value" required />
+                    <datalist id="locations"></datalist>
+                </div>
+
+                <div class="form-group">
+                    <label for="items">Itens</label>
+                    <textarea name="items" id="items" placeholder="dizer quais itens vão ser levados" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="freight-type">Tipo de frete</label>
+                    <select name="freight-type" id="freight-type" required>
+                        <option value="">Selecione uma opção</option>
+                        <option value="industrial">Industrial/Residencial</option>
+                        <option value="comercial">Comercial</option>
+                        <option value="residencial">Residencial</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <input type="submit" value="Orçamento" class="submit-btn"/>
+                </div>
+            </form>
+        </main>
+    </div>
 
     <script src="index.js"></script>
 </body>
