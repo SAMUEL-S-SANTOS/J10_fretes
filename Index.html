@@ -28,9 +28,9 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="location">Localização</label>
-                    <input list="locations" type="text" name="location" id="location" placeholder="Value" required />
-                    <datalist id="locations"></datalist>
+                    <label>Localização</label>
+                     <input type="text" name="Origem" id="txtOrigem" placeholder="Origem" required class="form-control" />
+                     <input type="text" name="Destino" id="txtDestino" placeholder="Destino" required class="form-control" />
                 </div>
 
                 <div class="form-group">
@@ -55,6 +55,10 @@
         </main>
     </div>
 
-    <script src="index.js"></script>
+<script src="index.js">
+</script>
+<script async
+    src="https://maps.googleapis.com/maps/api/js?key=SUA_CHAVE_API_AQUI&libraries=places&callback=initAutocomplete">
+</script>
 </body>
 </html>
