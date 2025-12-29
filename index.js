@@ -1,39 +1,79 @@
-function initAutocomplete() {
-    
-    const inputOrigem = document.getElementById("txtOrigem");
-    const inputDestino = document.getElementById("txtDestino");
+const TEMPO_ESPERA = 500; 
+
+function configurarAutocomplete(inputId, listaId) {
+    const input = document.getElementById(inputId);
+    const lista = document.getElementById(listaId);
+    let timeoutId;
+
+    if (!input || !lista) return;
 
     
-    if (!inputOrigem || !inputDestino) {
-        console.error("Campos de endereço não encontrados no HTML.");
-        return;
-    }
+    input.addEventListener('input', function() {
+        const termo = this.value;
 
-    
-    const options = {
-        componentRestrictions: { country: "br" }, 
-        fields: ["address_components", "geometry", "icon", "name"],
-        types: ["address"], 
-    };
-
-    
-    const autocompleteOrigem = new google.maps.places.Autocomplete(inputOrigem, options);
-
-    
-    const autocompleteDestino = new google.maps.places.Autocomplete(inputDestino, options);
-
-    
-    autocompleteOrigem.addListener("place_changed", () => {
-        const place = autocompleteOrigem.getPlace();
         
-        if (!place.geometry || !place.geometry.location) {
-            console.log("Local retornado não possui geometria.");
+        clearTimeout(timeoutId);
+
+        if (termo.length < 3) {
+            lista.style.display = 'none';
             return;
         }
-        console.log("Endereço Origem selecionado:", place.name);
-        console.log("Lat:", place.geometry.location.lat(), "Lng:", place.geometry.location.lng());
+
+       
+        timeoutId = setTimeout(() => {
+            buscarEnderecos(termo, lista, input);
+        }, TEMPO_ESPERA);
+    });
+
+    
+    document.addEventListener('click', function(e) {
+        if (e.target !== input) {
+            lista.style.display = 'none';
+        }
     });
 }
 
+async function buscarEnderecos(termo, lista, input) {
+    try {
+        
+        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(termo)}&countrycodes=br&limit=5`;
 
-window.initAutocomplete = initAutocomplete;
+        const response = await fetch(url);
+        const data = await response.json();
+
+        lista.innerHTML = ''; 
+
+        if (data.length === 0) {
+            lista.style.display = 'none';
+            return;
+        }
+
+       
+        data.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = item.display_name; 
+            
+            
+            li.addEventListener('click', () => {
+                input.value = item.display_name; 
+                lista.style.display = 'none'; 
+                
+                
+                console.log("Lat:", item.lat, "Lon:", item.lon);
+            });
+
+            lista.appendChild(li);
+        });
+
+        lista.style.display = 'block'; 
+
+    } catch (error) {
+        console.error("Erro ao buscar endereço:", error);
+    }
+}
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    configurarAutocomplete('txtOrigem', 'listaOrigem');
+    configurarAutocomplete('txtDestino', 'listaDestino');
+});
