@@ -27,11 +27,20 @@
                     <input type="tel" name="phone" id="phone" placeholder="(ddd) 0000-0000" required />
                 </div>
                 
-                <div class="form-group">
-                    <label>Localização</label>
-                     <input type="text" name="Origem" id="txtOrigem" placeholder="Origem" required class="form-control" />
-                     <input type="text" name="Destino" id="txtDestino" placeholder="Destino" required class="form-control" />
+            <div class="form-group">
+                <label>Localização</label>
+
+                <div class="input-wrapper">
+                    <input type="text" name="Origem" id="txtOrigem" placeholder="Origem" autocomplete="off" class="form-control" />
+                     <ul id="listaOrigem" class="suggestions-list"></ul>
                 </div>
+
+                <div class="input-wrapper">
+                    <input type="text" name="Destino" id="txtDestino" placeholder="Destino" autocomplete="off" class="form-control" />
+                    <ul id="listaDestino" class="suggestions-list"></ul>
+                </div>
+            </div>
+
 
                 <div class="form-group">
                     <label for="items">Itens</label>
@@ -57,8 +66,6 @@
 
 <script src="index.js">
 </script>
-<script async
-    src="https://maps.googleapis.com/maps/api/js?key=SUA_CHAVE_API_AQUI&libraries=places&callback=initAutocomplete">
-</script>
+
 </body>
 </html>
