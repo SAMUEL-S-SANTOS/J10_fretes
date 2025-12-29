@@ -8,17 +8,23 @@ function configurarAutocomplete(inputId, listaId) {
     if (!input || !lista) return;
 
     input.addEventListener('input', function() {
-        const termo = this.value;
+        
+        const valorTotal = this.value;
+        const numeroDigitado = valorTotal.match(/\d+/) ? valorTotal.match(/\d+/)[0] : '';
+        
+       
+        const termoLimpo = valorTotal.replace(/\d+/g, '').trim();
 
         clearTimeout(timeoutId);
 
-        if (termo.length < 3) {
+        if (termoLimpo.length < 3) {
             lista.style.display = 'none';
             return;
         }
 
         timeoutId = setTimeout(() => {
-            buscarEnderecos(termo, lista, input);
+            
+            buscarEnderecos(termoLimpo, lista, input, numeroDigitado);
         }, TEMPO_ESPERA);
     });
 
@@ -29,13 +35,13 @@ function configurarAutocomplete(inputId, listaId) {
     });
 }
 
-async function buscarEnderecos(termo, lista, input) {
+async function buscarEnderecos(termo, lista, input, numeroSalvo) {
     try {
         
         const termoBusca = `${termo}, Santa Catarina`;
 
-       
-        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(termoBusca)}&countrycodes=br&limit=5`;
+        
+        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(termoBusca)}&countrycodes=br&limit=5&addressdetails=1`;
 
         const response = await fetch(url);
         const data = await response.json();
@@ -50,16 +56,40 @@ async function buscarEnderecos(termo, lista, input) {
         data.forEach(item => {
             const li = document.createElement('li');
             
+          
+            const end = item.address;
             
-            li.textContent = item.display_name; 
+            
+            const rua = end.road || end.pedestrian || end.street || termo;
+            const bairro = end.suburb || end.neighbourhood || end.residential || '';
+            const cidade = end.city || end.town || end.municipality || end.village || '';
+            const estado = "SC"; 
 
+            let textoSugestao = `${rua}`;
+            if (bairro) textoSugestao += `, ${bairro}`;
+            if (cidade) textoSugestao += ` - ${cidade}`;
+            
+            li.textContent = textoSugestao;
+
+            
             li.addEventListener('click', () => {
                 
-                input.value = item.display_name; 
+                const numeroFinal = numeroSalvo ? numeroSalvo : "";
+                
+                
+                let enderecoFormatado = `${rua}, ${numeroFinal}`;
+                
+                
+                if (!numeroFinal) enderecoFormatado += " "; 
+                
+                if (bairro) enderecoFormatado += `, ${bairro}`;
+                if (cidade) enderecoFormatado += `, ${cidade}-${estado}`;
+
+                input.value = enderecoFormatado;
                 lista.style.display = 'none';
                 
                 
-                console.log("Lat:", item.lat, "Lon:", item.lon);
+                input.focus();
             });
 
             lista.appendChild(li);
@@ -71,7 +101,6 @@ async function buscarEnderecos(termo, lista, input) {
         console.error("Erro ao buscar endereço:", error);
     }
 }
-
 
 document.addEventListener('DOMContentLoaded', () => {
     configurarAutocomplete('txtOrigem', 'listaOrigem');
