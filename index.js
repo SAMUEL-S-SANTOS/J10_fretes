@@ -7,11 +7,9 @@ function configurarAutocomplete(inputId, listaId) {
 
     if (!input || !lista) return;
 
-    
     input.addEventListener('input', function() {
         const termo = this.value;
 
-        
         clearTimeout(timeoutId);
 
         if (termo.length < 3) {
@@ -19,13 +17,11 @@ function configurarAutocomplete(inputId, listaId) {
             return;
         }
 
-       
         timeoutId = setTimeout(() => {
             buscarEnderecos(termo, lista, input);
         }, TEMPO_ESPERA);
     });
 
-    
     document.addEventListener('click', function(e) {
         if (e.target !== input) {
             lista.style.display = 'none';
@@ -36,27 +32,31 @@ function configurarAutocomplete(inputId, listaId) {
 async function buscarEnderecos(termo, lista, input) {
     try {
         
-        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(termo)}&countrycodes=br&limit=5`;
+        const termoBusca = `${termo}, Santa Catarina`;
+
+       
+        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(termoBusca)}&countrycodes=br&limit=5`;
 
         const response = await fetch(url);
         const data = await response.json();
 
-        lista.innerHTML = ''; 
+        lista.innerHTML = '';
 
         if (data.length === 0) {
             lista.style.display = 'none';
             return;
         }
 
-       
         data.forEach(item => {
             const li = document.createElement('li');
+            
+            
             li.textContent = item.display_name; 
-            
-            
+
             li.addEventListener('click', () => {
+                
                 input.value = item.display_name; 
-                lista.style.display = 'none'; 
+                lista.style.display = 'none';
                 
                 
                 console.log("Lat:", item.lat, "Lon:", item.lon);
@@ -65,7 +65,7 @@ async function buscarEnderecos(termo, lista, input) {
             lista.appendChild(li);
         });
 
-        lista.style.display = 'block'; 
+        lista.style.display = 'block';
 
     } catch (error) {
         console.error("Erro ao buscar endereço:", error);
