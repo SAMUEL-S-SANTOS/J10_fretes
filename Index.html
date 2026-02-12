@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
@@ -8,10 +9,11 @@
     <link href="style.css" rel="stylesheet" />
     <title>J10 Fretes - Orçamento</title>
 </head>
+
 <body>
     <div class="container">
         <header class="header">
-            <img id="head" src="imagens/logo.png" alt="logo J10 Fretes" class="logo"/>
+            <img id="head" src="imagens/logo.png" alt="logo J10 Fretes" class="logo" />
         </header>
 
         <main class="main-content">
@@ -21,30 +23,33 @@
                     <label for="name">Nome</label>
                     <input type="text" name="name" id="name" placeholder="Value" required />
                 </div>
-                
+
                 <div class="form-group">
                     <label for="phone">Telefone</label>
                     <input type="tel" name="phone" id="phone" placeholder="(ddd) 0000-0000" required />
                 </div>
-                
-            <div class="form-group">
-                <label>Localização</label>
 
-                <div class="input-wrapper">
-                    <input type="text" name="Origem" id="txtOrigem" placeholder="Origem" autocomplete="off" class="form-control" />
-                     <ul id="listaOrigem" class="suggestions-list"></ul>
-                </div>
+                <div class="form-group">
+                    <label>Localização</label>
 
-                <div class="input-wrapper">
-                    <input type="text" name="Destino" id="txtDestino" placeholder="Destino" autocomplete="off" class="form-control" />
-                    <ul id="listaDestino" class="suggestions-list"></ul>
+                    <div class="input-wrapper">
+                        <input type="text" name="Origem" id="txtOrigem" placeholder="Origem" autocomplete="off"
+                            class="form-control" />
+                        <ul id="listaOrigem" class="suggestions-list"></ul>
+                    </div>
+
+                    <div class="input-wrapper">
+                        <input type="text" name="Destino" id="txtDestino" placeholder="Destino" autocomplete="off"
+                            class="form-control" />
+                        <ul id="listaDestino" class="suggestions-list"></ul>
+                    </div>
                 </div>
-            </div>
 
 
                 <div class="form-group">
                     <label for="items">Itens</label>
-                    <textarea name="items" id="items" placeholder="dizer quais itens vão ser levados" required></textarea>
+                    <textarea name="items" id="items" placeholder="dizer quais itens vão ser levados"
+                        required></textarea>
                 </div>
 
                 <div class="form-group">
@@ -56,16 +61,18 @@
                         <option value="residencial">Residencial</option>
                     </select>
                 </div>
-                
+
                 <div class="form-group">
-                    <input type="submit" value="Orçamento" class="submit-btn"/>
+                    <!-- aplicar lógica de enviar as informações para o whatsapp após clicar no botão -->
+                    <input type="submit" value="Orçamento" class="submit-btn" />
                 </div>
             </form>
         </main>
     </div>
 
-<script src="index.js">
-</script>
+    <script src="index.js">
+    </script>
 
 </body>
+
 </html>
