@@ -106,3 +106,51 @@ document.addEventListener('DOMContentLoaded', () => {
     configurarAutocomplete('txtOrigem', 'listaOrigem');
     configurarAutocomplete('txtDestino', 'listaDestino');
 });
+
+const freightItems = {
+    industrial: ["Máquinas", "Equipamentos", "Ferramentas"],
+    comercial: ["Produtos", "Caixas", "Materiais de escritório"],
+    residencial: ["Armário", "Sofá", "Geladeira", "Cama", "Mesa"]
+};
+
+const freightType = document.getElementById('freight-type');
+const itemsDiv = document.getElementById('item-quantities');
+const itemsTextarea = document.getElementById('items');
+
+freightType.addEventListener('change', function() {
+    const selected = this.value;
+    itemsDiv.innerHTML = '';
+    itemsTextarea.value = '';
+    if (freightItems[selected]) {
+        freightItems[selected].forEach(item => {
+            const wrapper = document.createElement('div');
+            wrapper.style.marginBottom = '4px';
+            const label = document.createElement('label');
+            label.textContent = item + ': ';
+            label.style.marginRight = '4px';
+            const input = document.createElement('input');
+            input.type = 'number';
+            input.min = '0';
+            input.value = '';
+            input.style.width = '60px';
+            input.setAttribute('data-item', item);
+            input.addEventListener('input', updateItemsTextarea);
+            wrapper.appendChild(label);
+            wrapper.appendChild(input);
+            itemsDiv.appendChild(wrapper);
+        });
+    }
+});
+
+function updateItemsTextarea() {
+    const inputs = itemsDiv.querySelectorAll('input[type="number"]');
+    const result = [];
+    inputs.forEach(input => {
+        const qty = parseInt(input.value, 10);
+        const name = input.getAttribute('data-item');
+        if (!isNaN(qty) && qty > 0) {
+            result.push(`${name}: ${qty}`);
+        }
+    });
+    itemsTextarea.value = result.join('\n');
+}
