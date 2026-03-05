@@ -6,6 +6,14 @@
     <meta name="description" content="J10 Fretes - Sistema de orçamento de fretes">
     <meta name="theme-color" content="#4CAF50">
     <link href="style.css" rel="stylesheet" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            
+            emailjs.init("SUA_PUBLIC_KEY_AQUI");
+        })();
+    </script>
+
     <title>J10 Fretes - Orçamento</title>
 </head>
 <body>
@@ -54,7 +62,7 @@
                 <div class="form-group">
                     <label for="items">Itens</label>
                     <div id="item-quantities" style="margin-bottom:8px;"></div>
-                    <textarea name="items" id="items" placeholder="dizer quais itens vão ser levados" required></textarea>
+                    <textarea name="items" id="items" placeholder="Observações" required></textarea>
                 </div>
 
             
