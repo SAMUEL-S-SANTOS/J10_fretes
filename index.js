@@ -1,51 +1,44 @@
-const TEMPO_ESPERA = 500; 
+const TEMPO_ESPERA = 600; 
+const BOUNDS_SC = "-53.8,-29.5,-48.3,-25.9"; 
+
 
 function configurarAutocomplete(inputId, listaId) {
     const input = document.getElementById(inputId);
     const lista = document.getElementById(listaId);
     let timeoutId;
-
     if (!input || !lista) return;
-
     input.addEventListener('input', function() {
-        
         const valorTotal = this.value;
         const numeroDigitado = valorTotal.match(/\d+/) ? valorTotal.match(/\d+/)[0] : '';
-        
-       
         const termoLimpo = valorTotal.replace(/\d+/g, '').trim();
-
         clearTimeout(timeoutId);
-
         if (termoLimpo.length < 3) {
             lista.style.display = 'none';
             return;
         }
 
         timeoutId = setTimeout(() => {
-            
             buscarEnderecos(termoLimpo, lista, input, numeroDigitado);
         }, TEMPO_ESPERA);
-    });
 
+    });
     document.addEventListener('click', function(e) {
+
         if (e.target !== input) {
             lista.style.display = 'none';
         }
+
     });
+
 }
 
 async function buscarEnderecos(termo, lista, input, numeroSalvo) {
+
     try {
-        
         const termoBusca = `${termo}, Santa Catarina`;
-
-        
         const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(termoBusca)}&countrycodes=br&limit=5&addressdetails=1`;
-
         const response = await fetch(url);
         const data = await response.json();
-
         lista.innerHTML = '';
 
         if (data.length === 0) {
@@ -55,51 +48,40 @@ async function buscarEnderecos(termo, lista, input, numeroSalvo) {
 
         data.forEach(item => {
             const li = document.createElement('li');
-            
-          
             const end = item.address;
-            
-            
             const rua = end.road || end.pedestrian || end.street || termo;
             const bairro = end.suburb || end.neighbourhood || end.residential || '';
             const cidade = end.city || end.town || end.municipality || end.village || '';
-            const estado = "SC"; 
+            const estado = "SC";
 
             let textoSugestao = `${rua}`;
             if (bairro) textoSugestao += `, ${bairro}`;
             if (cidade) textoSugestao += ` - ${cidade}`;
-            
             li.textContent = textoSugestao;
 
-            
             li.addEventListener('click', () => {
-                
                 const numeroFinal = numeroSalvo ? numeroSalvo : "";
-                
-                
                 let enderecoFormatado = `${rua}, ${numeroFinal}`;
-                
-                
-                if (!numeroFinal) enderecoFormatado += " "; 
-                
+                if (!numeroFinal) enderecoFormatado += " ";
                 if (bairro) enderecoFormatado += `, ${bairro}`;
                 if (cidade) enderecoFormatado += `, ${cidade}-${estado}`;
 
                 input.value = enderecoFormatado;
                 lista.style.display = 'none';
-                
-                
                 input.focus();
-            });
 
+            });
             lista.appendChild(li);
+
         });
 
         lista.style.display = 'block';
 
     } catch (error) {
         console.error("Erro ao buscar endereço:", error);
+
     }
+
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -231,39 +213,32 @@ function updateItemsTextarea() {
             }
         }
     });
-   
     itemsTextarea.value = result.join('\n');
+}
 
-    const formOrcamento = document.getElementById('quoteForm');
+// Adiciona o event listener de submit apenas uma vez, fora da função updateItemsTextarea
+const formOrcamento = document.getElementById('quoteForm');
+if (formOrcamento) {
+    formOrcamento.addEventListener('submit', function(event) {
+        // Impede a página de recarregar
+        event.preventDefault();
 
-formOrcamento.addEventListener('submit', function(event) {
-    // Impede a página de recarregar
-    event.preventDefault();
+        // Feedback visual para o usuário
+        const btnSubmit = document.querySelector('.submit-btn');
+        const textoOriginal = btnSubmit.value;
+        btnSubmit.value = 'Enviando...';
 
-    // Feedback visual para o usuário
-    const btnSubmit = document.querySelector('.submit-btn');
-    const textoOriginal = btnSubmit.value;
-    btnSubmit.value = 'Enviando...';
-
-    
-    emailjs.sendForm('SEU_SERVICE_ID', 'SEU_TEMPLATE_ID', this)
-        .then(function() {
-            
-            alert('Orçamento solicitado com sucesso! Entraremos em contato em breve.');
-            
-            
-            btnSubmit.value = textoOriginal;
-            formOrcamento.reset();
-            
-           
-            const itemsDiv = document.getElementById('item-quantities');
-            if (itemsDiv) itemsDiv.innerHTML = '';
-            
-        }, function(error) {
-           
-            console.error('Erro ao enviar e-mail:', error);
-            alert('Ocorreu um erro ao enviar o orçamento. Tente novamente mais tarde.');
-            btnSubmit.value = textoOriginal;
-        });
-});
+        emailjs.sendForm('service_0177rme', 'template_hcs317l', this)
+            .then(function() {
+                alert('Orçamento solicitado com sucesso! Entraremos em contato em breve.');
+                btnSubmit.value = textoOriginal;
+                formOrcamento.reset();
+                const itemsDiv = document.getElementById('item-quantities');
+                if (itemsDiv) itemsDiv.innerHTML = '';
+            }, function(error) {
+                console.error('Erro ao enviar e-mail:', error);
+                alert('Ocorreu um erro ao enviar o orçamento. Tente novamente mais tarde.');
+                btnSubmit.value = textoOriginal;
+            });
+    });
 }
